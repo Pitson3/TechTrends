@@ -71,6 +71,31 @@ def healthz():
     #Return a json object with an HTTP 200 status code and result: OK-healthy message
     return jsonify({'data':{'status':200, 'result':'OK-healthy'}})
 
+#Define the /metrics end point and its function
+@app.route('/metrics', methods=(['GET']))
+def metrics():
+    #Database connection 
+    connection = get_db_connection()
+    
+    #Initializie the count for the connections to the db 
+    conn_count = None
+    
+    #Check connection
+    if connection:
+        conn_count = 1
+    else:
+        conn_count = 0
+
+    #Execute a selection query for the posts in the database and Count the number of selected rows in the database 
+    
+    posts_count = connection.execute('SELECT COUNT(*) FROM posts').fetchone()[0] #The .fetchone()[0] is more efficient than len(connection.execute('').fetchall()) efficient agan
+
+    #posts = connection.execute('SELECT * FROM posts').fetchall() 
+    #posts_count = len(posts) #Inefficient on large DB
+
+    #Return a json object with HTTP 200 status code, the total number of posts in the database and total connections to the database
+    return jsonify({'data': {'status':200, 'db_connection_count': conn_count, 'post_count':posts_count}})
+
 # start the application on port 3111
 if __name__ == "__main__":
    app.run(host='0.0.0.0', port=3111)
