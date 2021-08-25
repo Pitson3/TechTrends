@@ -65,6 +65,12 @@ def create():
 
     return render_template('create.html')
 
+#Define the /healthz end point and its function 
+@app.route('/healthz', methods=(['GET']))
+def healthz():
+    #Return a json object with an HTTP 200 status code and result: OK-healthy message
+    return jsonify({'data':{'status':200, 'result':'OK-healthy'}})
+
 # start the application on port 3111
 if __name__ == "__main__":
-   app.run(host='0.0.0.0', port='3111')
+   app.run(host='0.0.0.0', port=3111)
