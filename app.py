@@ -93,11 +93,15 @@ def create():
 
     return render_template('create.html')
 
+"""
+NOTE: Chosen to use and map the key 'data' to the required json onjects as per the project instructions
+"""
 #Define the /healthz end point and its function 
 @app.route('/healthz', methods=(['GET']))
 def healthz():
     #Return a json object with an HTTP 200 status code and result: OK-healthy message
     return jsonify({'data':{'status':200, 'result':'OK-healthy'}})
+    #return jsonify({'status':200, 'result':'OK-healthy'})
 
 #Define the /metrics end point and its function
 @app.route('/metrics', methods=(['GET']))
@@ -128,6 +132,7 @@ def metrics():
 
     #Return a json object with HTTP 200 status code, the total number of posts in the database and total connections to the database
     return jsonify({'data': {'status':200, 'db_connection_count': conn_count, 'post_count':posts_count}})
+    #return jsonify({'status':200, 'db_connection_count': conn_count, 'post_count':posts_count})
 
 # start the application on port 3111
 if __name__ == "__main__":
