@@ -139,8 +139,8 @@ if __name__ == "__main__":
     #Configuring the logging functionality before running the app
    logging.basicConfig(filename='event_log.log',level=logging.DEBUG, format='%(levelname)s:%(name)s: %(message)s')
 
-   app.run(host='0.0.0.0', port=3111, debug=True)
-   #app.run(host='0.0.0.0', port=3111)
+   #app.run(host='0.0.0.0', port=3111, debug=True)
+   app.run(host='0.0.0.0', port=3111)
 
    
    

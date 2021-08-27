@@ -1,0 +1,47 @@
+
+# vCI workflow for a TechTrends application
+#name requirement
+name: TechTrends - Package with Docker
+
+# Triggers the workflow on push for the main branch
+on:
+  push:
+    branches: [ main ]
+  #pull_request:
+    #branches: [ main ]
+
+#oooo
+
+# A workflow for running one or more jobs that can run sequentially or in parallel
+jobs:
+  # "build" job
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps for executing the job
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1 
+        with:
+          username: ${{ 'pitson3' }}
+          password: ${{ 'c46af380-cadc-45f3-9144-9ff0605170f3' }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64, linux/arm64
+          push: true
+          tags: pitson3/techtrends:latest
