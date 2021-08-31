@@ -100,8 +100,8 @@ NOTE: Chosen to use and map the key 'data' to the required json onjects as per t
 @app.route('/healthz', methods=(['GET']))
 def healthz():
     #Return a json object with an HTTP 200 status code and result: OK-healthy message
-    return jsonify({'data':{'status':200, 'result':'OK-healthy'}})
-    #return jsonify({'status':200, 'result':'OK-healthy'})
+    #return jsonify({'data':{'status':200, 'result':'OK-healthy'}})
+    return jsonify({'status':200, 'result':'OK-healthy'})
 
 #Define the /metrics end point and its function
 @app.route('/metrics', methods=(['GET']))
@@ -131,16 +131,19 @@ def metrics():
     connection.close()
 
     #Return a json object with HTTP 200 status code, the total number of posts in the database and total connections to the database
-    return jsonify({'data': {'status':200, 'db_connection_count': conn_count, 'post_count':posts_count}})
-    #return jsonify({'status':200, 'db_connection_count': conn_count, 'post_count':posts_count})
+    #return jsonify({'data': {'status':200, 'db_connection_count': conn_count, 'post_count':posts_count}})
+    return jsonify({'status':200, 'db_connection_count': conn_count, 'post_count':posts_count})
+
+#app.logger.setLevel(logging.DEBUG)
 
 # start the application on port 3111
 if __name__ == "__main__":
     #Configuring the logging functionality before running the app
-   logging.basicConfig(filename='event_log.log',level=logging.DEBUG, format='%(levelname)s:%(name)s: %(message)s')
+   logging.basicConfig(filename='event_log.log',level=logging.DEBUG)
 
-   #app.run(host='0.0.0.0', port=3111, debug=True)
-   app.run(host='0.0.0.0', port=3111)
+   app.run(host='0.0.0.0', port=3111, debug=True)
+   #app.run(host='0.0.0.0', port=3111)
 
    
    
+ 
