@@ -2,12 +2,8 @@ import sqlite3
 
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
 from werkzeug.exceptions import abort
-import logging, time 
+import logging, time, sys 
 
-
-"""
-Used python3 against the old 2.7 in the project
-"""
 # Function to get a database connection.
 # This function connects to database with the name `database.db`
 def get_db_connection():
@@ -52,7 +48,7 @@ def post(post_id):
       return render_template('404.html'), 404
     else:
       #Log title upon retrieval 
-      app.logger.info("%s" + ", Article \"" + post['title'] + "\" retrieved", f_time)
+      logging.info("%s" + ", Article \"" + post['title'] + "\" retrieved", f_time)
 
       return render_template('post.html', post=post)
 
@@ -62,7 +58,7 @@ def about():
     c_time = time.localtime()
     f_time = time.strftime("%m/%d/%Y %H:%M:%S", c_time)
     #Log title upon retrieval 
-    app.logger.info("%s" + ", About US page is retrieved", f_time)
+    logging.info("%s" + ", About US page is retrieved", f_time)
 
     return render_template('about.html')
 
@@ -84,7 +80,7 @@ def create():
                 c_time = time.localtime()
                 f_time = time.strftime("%m/%d/%Y %H:%M:%S", c_time)
                 #Log title upon retrieval 
-                app.logger.info("%s" + ", Article \"" + title + "\" created", f_time)
+                logging.info("%s" + ", Article \"" + title + "\" created", f_time)
 
             connection.commit()
             connection.close()
@@ -93,9 +89,6 @@ def create():
 
     return render_template('create.html')
 
-"""
-NOTE: Chosen to use and map the key 'data' to the required json onjects as per the project instructions
-"""
 #Define the /healthz end point and its function 
 @app.route('/healthz', methods=(['GET']))
 def healthz():
@@ -139,7 +132,7 @@ def metrics():
 # start the application on port 3111
 if __name__ == "__main__":
     #Configuring the logging functionality before running the app
-   logging.basicConfig(filename='event_log.log',level=logging.DEBUG)
+   logging.basicConfig(stream=sys.stdout,level=logging.DEBUG, format=f'%(levelname)s:%(name)s: %(message)s')
 
    app.run(host='0.0.0.0', port=3111, debug=True)
    #app.run(host='0.0.0.0', port=3111)
