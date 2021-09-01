@@ -132,7 +132,7 @@ def metrics():
 # start the application on port 3111
 if __name__ == "__main__":
     #Configuring the logging functionality before running the app
-   logging.basicConfig(stream=sys.stdout,level=logging.DEBUG, format=f'%(levelname)s:%(name)s: %(message)s')
+   logging.basicConfig(stream=sys.stdout,level=logging.DEBUG, format='%(levelname)s:%(name)s: %(message)s')
 
    app.run(host='0.0.0.0', port=3111, debug=True)
    #app.run(host='0.0.0.0', port=3111)
