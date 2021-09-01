@@ -19,7 +19,7 @@ RUN pip install -r requirements.txt
 EXPOSE 3111
 
 #Initialize tne database
-#CMD ['python', 'init_db.py']
+CMD ['python', 'init_db.py']
 
 # command to run on container start
 CMD [ "python", "app.py" ]
